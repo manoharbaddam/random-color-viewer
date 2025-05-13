@@ -1,0 +1,29 @@
+*{
+    margin: 0;
+}
+
+h1{
+    text-align: center;
+}
+
+.palette{
+    display: flex;
+    justify-content: space-evenly;
+
+
+}
+
+.color{
+     display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    border:1px solid black;
+    min-width: 18%;
+    min-height: 80vh;
+    border-radius: 5px;
+    color: black;
+    font-weight: bolder;
+    font-size: 1.25rem;
+    background-color: aqua;
+}
