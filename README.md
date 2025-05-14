@@ -1,6 +1,6 @@
 # 🎨 Random Color Viewer
 
-### 🌐 Live Demo: [👉 View it here](#)  
+### 🌐 Live Demo: [👉 View it here](https://random-color-viewer.netlify.app/)  
 
 A simple and responsive web app that generates random color palettes. It displays 5 random colors on load, allows users to add up to 10 colors, and lets you refresh the palette anytime.
 
