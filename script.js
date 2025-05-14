@@ -1,5 +1,10 @@
 const palette = document.getElementById("palette");
 const button = document.getElementById("addMore");
+const refresh = document.getElementById("refresh");
+
+const MAX_COLORS = 10;
+const INITIAL_COLORS = 5;
+let colorCount = 0;
 
 const getRandomColor = () =>
     '#' + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0').toUpperCase();
@@ -18,33 +23,40 @@ const isLight = ([r, g, b]) => {
 };
 
 const addColor = () => {
+
     const color = getRandomColor();
+    const rgb = hexToRgb(color);
+
     const colorContainer = document.createElement('div');
     colorContainer.className = "color";
     colorContainer.textContent = color;
     colorContainer.style.backgroundColor = color;
-    const rgb = hexToRgb(color);
     colorContainer.style.color = isLight(rgb) ? 'black' : 'white';
-
     palette.appendChild(colorContainer);
+    colorCount++;
+    if (colorCount >= MAX_COLORS) {
+        button.disabled = true;
+        button.textContent = "Limit Reached";
+    }
 }
 
-for (let i = 0; i < 5; i++) {
-    addColor();
-}
+const resetPalette = () => {
+    palette.textContent = "";
+    colorCount = 0;
+    button.disabled = false;
+    button.textContent = "Add More";
+    for (let i = 0; i < INITIAL_COLORS; i++) {
+        addColor();
+    }
+};
 
-
-let colorCount = 5;
-const MAX_COLORS = 10;
+resetPalette();
 
 button.addEventListener("click", () => {
-    console.log(colorCount);
-    if (colorCount == MAX_COLORS) {
-        button.disabled = true;
-    button.textContent = "Limit Reached";
-    }
-    else {
+    if (colorCount < MAX_COLORS) {
         addColor();
-        colorCount++;
     }
 });
+
+refresh.addEventListener("click", resetPalette);
+
