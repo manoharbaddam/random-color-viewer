@@ -1,32 +1,50 @@
-const color1 = document.getElementById('color1');
-const color2 = document.getElementById('color2');
-const color3 = document.getElementById('color3');
-const color4 = document.getElementById('color4');
+const palette = document.getElementById("palette");
+const button = document.getElementById("addMore");
 
+const getRandomColor = () =>
+    '#' + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0').toUpperCase();
 
-const valuesForHex = ['A','B','C','D','E','F','1','2','3','4','5','6','7','8','9','0'];
+const hexToRgb = hex => {
+    const bigint = parseInt(hex.slice(1), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return [r, g, b];
+};
 
+const isLight = ([r, g, b]) => {
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    return brightness > 160;
+};
 
-const getValue = ()=> valuesForHex[Math.floor(Math.random() * valuesForHex.length)];
+const addColor = () => {
+    const color = getRandomColor();
+    const colorContainer = document.createElement('div');
+    colorContainer.className = "color";
+    colorContainer.textContent = color;
+    colorContainer.style.backgroundColor = color;
+    const rgb = hexToRgb(color);
+    colorContainer.style.color = isLight(rgb) ? 'black' : 'white';
 
-
-const getColor = ()=>{
-    let colorCode = "#";
-    for(let i=0;i<6;i++){
-        colorCode += getValue();
-    }
-    return colorCode;
+    palette.appendChild(colorContainer);
 }
 
-console.log(getColor());
+for (let i = 0; i < 5; i++) {
+    addColor();
+}
 
-const colors = [color1, color2, color3, color4];
-colors.forEach(colorBox => {
-    const color = getColor();
-    colorBox.textContent = color;
-    colorBox.style.backgroundColor = color;
+
+let colorCount = 5;
+const MAX_COLORS = 10;
+
+button.addEventListener("click", () => {
+    console.log(colorCount);
+    if (colorCount == MAX_COLORS) {
+        button.disabled = true;
+    button.textContent = "Limit Reached";
+    }
+    else {
+        addColor();
+        colorCount++;
+    }
 });
-
-
-
-
